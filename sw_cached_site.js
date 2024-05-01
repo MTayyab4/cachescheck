@@ -8,19 +8,21 @@ self.addEventListener('install', e => {
 });
 
 // Call Activate Event
+const version = 'v1';
+
 self.addEventListener('activate', e => {
     console.log('Service Worker: Activated');
-    // Remove unwanted caches
     e.waitUntil(
         caches.keys().then(keyList => {
             return Promise.all(
                 keyList.map(cache => {
-                    if (cache !== cacheName) {
+                    if (cache !== version) {
                         console.log("Service Worker: Clearing old cache");
                         return caches.delete(cache);
                     }
-                })
-            );
+                }
+                )
+            )
         })
     );
 });
